@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBBZY GAMES 💜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --gf-purple: #b06aff;
+      --gf-purple-dark: #7c3aed;
+      --gf-purple-light: #e9d5ff;
+      --gf-bg: #1a0533;
+      --friend-colors: #ff6b9d, #ffbe0b, #06d6a0, #ff5a5f, #3d9be9;
+      --neon-pink: #ff2d78;
+      --neon-cyan: #00fff7;
+      --neon-yellow: #fff44f;
+      --star-gold: #ffd700;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #0a0015;
+      color: white;
+    }
+
+    /* ==================== STARS BACKGROUND ==================== */
+    #stars-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur, 3s) infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: 0.1;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    /* ==================== SCREENS ==================== */
+    .screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    .screen.out {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-40px);
+    }
+
+    /* ==================== INTRO SCREEN ==================== */
+    #screen-intro {
+      background: radial-gradient(ellipse at center, #12003a 0%, #000 80%);
+    }
+
+    .intro-logo {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.1;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #ff2d78, #b06aff, #00fff7, #ffd700);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoGradient 3s ease infinite, logoPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes logoGradient {
+
+      0%,
+      100% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+    }
+
+    @keyframes logoPop {
+      from {
+        opacity: 0;
+        transform: scale(0.3) rotate(-10deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .intro-sub {
+      margin-top: 16px;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: fadeSlideUp 1s 0.5s both;
+    }
+
+    .intro-emoji-row {
+      font-size: 2rem;
+      margin-top: 24px;
+      animation: fadeSlideUp 1s 0.8s both;
+      letter-spacing: 8px;
+    }
+
+    .intro-btn {
+      margin-top: 48px;
+      animation: fadeSlideUp 1s 1.2s both;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 2px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #b06aff, #7c3aed);
+      box-shadow: 0 0 30px rgba(176, 106, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-purple:hover {
+      box-shadow: 0 0 50px rgba(176, 106, 255, 0.8), 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-pink {
+      background: linear-gradient(135deg, #ff2d78, #ff6b9d);
+      box-shadow: 0 0 30px rgba(255, 45, 120, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-cyan {
+      background: linear-gradient(135deg, #00fff7, #0099ff);
+      color: #000;
+      box-shadow: 0 0 30px rgba(0, 255, 247, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #ffd700, #ff9500);
+      color: #000;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #06d6a0, #05a87e);
+      box-shadow: 0 0 30px rgba(6, 214, 160, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-outline:hover {
+      border-color: white;
+      color: white;
+    }
+
+    /* ==================== GIRLFRIEND SCREEN ==================== */
+    #screen-gf {
+      background: radial-gradient(ellipse at 30% 30%, #3d0070 0%, #1a0040 40%, #0a0020 100%);
+    }
+
+    .gf-card {
+      background: rgba(176, 106, 255, 0.1);
+      border: 1px solid rgba(176, 106, 255, 0.4);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 60px rgba(176, 106, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      animation: cardFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    .gf-crown {
+      font-size: 3rem;
+      margin-bottom: 8px;
+      animation: spin 4s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(-10deg)
+      }
+
+      50% {
+        transform: rotate(10deg)
+      }
+
+      to {
+        transform: rotate(-10deg)
+      }
+    }
+
+    .gf-title {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #e9d5ff, #b06aff, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .gf-sub {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .gf-link-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(176, 106, 255, 0.5);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: #b06aff;
+      word-break: break-all;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .gf-link-box:hover {
+      background: rgba(176, 106, 255, 0.15);
+    }
+
+    .copy-hint {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 28px;
+    }
+
+    .gf-leaderboard-btn {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 12px;
+    }
+
+    /* ==================== FRIEND INTRO SCREEN ==================== */
+    #screen-friend-intro {}
+
+    .friend-intro-card {
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
+      animation: cardFloat 4s ease-in-out infinite;
+    }
+
+    .friend-intro-emoji {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .friend-intro-title {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .friend-intro-desc {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* ==================== NAME ENTRY ==================== */
+    #screen-name {}
+
+    .name-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .name-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .name-sub {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+
+    .name-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      color: white;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 20px;
+    }
+
+    .name-input:focus {
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .name-input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==================== DOOR SELECTION ==================== */
+    #screen-doors {}
+
+    .doors-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .doors-sub {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      margin-bottom: 32px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .doors-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      max-width: 600px;
+    }
+
+    .door-card {
+      width: 100px;
+      height: 140px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Pixelify Sans', monospace;
+    }
+
+    .door-card:hover {
+      transform: translateY(-6px) scale(1.05);
+    }
+
+    .door-card.locked {
+      filter: grayscale(0.6);
+      cursor: not-allowed;
+    }
+
+    .door-card.locked:hover {
+      transform: none;
+    }
+
+    .door-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .door-label {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .door-lock {
+      font-size: 1.2rem;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+
+    .door-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ==================== CHALLENGE SCREEN ==================== */
+    #screen-challenge {
+      overflow-y: auto;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .challenge-wrap {
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .challenge-header {
+      text-align: center;
+      width: 100%;
+    }
+
+    .challenge-door-badge {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 50px;
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .challenge-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .challenge-desc {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .challenge-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 28px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+
+    .challenge-question {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .challenge-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .challenge-option {
+      background: rgba(255, 255, 255, 0.07);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .challenge-option:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateX(4px);
+    }
+
+    .challenge-option.correct {
+      background: rgba(6, 214, 160, 0.2);
+      border-color: #06d6a0;
+    }
+
+    .challenge-option.wrong {
+      background: rgba(255, 45, 120, 0.2);
+      border-color: #ff2d78;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      25% {
+        transform: translateX(-8px)
+      }
+
+      75% {
+        transform: translateX(8px)
+      }
+    }
+
+    .challenge-feedback {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      display: none;
+      margin-top: 10px;
+    }
+
+    .challenge-feedback.correct {
+      background: rgba(6, 214, 160, 0.15);
+      border: 1px solid rgba(6, 214, 160, 0.4);
+      color: #06d6a0;
+      display: block;
+    }
+
+    .challenge-feedback.wrong {
+      background: rgba(255, 45, 120, 0.15);
+      border: 1px solid rgba(255, 45, 120, 0.4);
+      color: #ff6b9d;
+      display: block;
+    }
+
+    /* Music player mini */
+    .music-choice {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .music-card {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .music-card:hover {
+      transform: scale(1.03);
+    }
+
+    .music-card.selected {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .music-card .song-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .music-card .song-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .music-card .song-artist {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    /* Mini games */
+    .word-scramble-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 1.2rem;
+      color: white;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 4px;
+      outline: none;
+      margin-bottom: 14px;
+    }
+
+    .word-scramble-input:focus {
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .scrambled-word {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 2rem;
+      letter-spacing: 8px;
+      color: var(--neon-cyan);
+      text-align: center;
+      margin: 18px 0;
+      text-shadow: 0 0 20px rgba(0, 255, 247, 0.5);
+    }
+
+    /* Emoji match */
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .emoji-tile {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .emoji-tile:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.08);
+    }
+
+    .emoji-tile.flipped {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .emoji-tile.matched {
+      background: rgba(6, 214, 160, 0.2);
+      border-color: #06d6a0;
+    }
+
+    .emoji-tile.back {
+      font-size: 0;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Morse / code input */
+    .code-display {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      letter-spacing: 6px;
+      text-align: center;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 20px rgba(255, 244, 79, 0.5);
+      margin: 18px 0;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #b06aff, #ff2d78);
+      transition: width 0.4s ease;
+    }
+
+    .progress-text {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-align: right;
+      margin-top: 4px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ==================== COMPLETE SCREEN ==================== */
+    #screen-complete {
+      background: radial-gradient(ellipse at center, #001a33 0%, #000 80%);
+      overflow-y: auto;
+    }
+
+    .complete-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 540px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .complete-emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      animation: bounce 1s ease infinite alternate;
+    }
+
+    @keyframes bounce {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-12px)
+      }
+    }
+
+    .complete-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .complete-msg {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    /* ==================== LEADERBOARD ==================== */
+    #screen-leaderboard {
+      background: radial-gradient(ellipse at top, #001a10 0%, #000 80%);
+      overflow-y: auto;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .leaderboard-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 540px;
+      width: 100%;
+      backdrop-filter: blur(20px);
+    }
+
+    .leaderboard-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffd700, #ff9500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .leaderboard-sub {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background 0.2s;
+    }
+
+    .leaderboard-row:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .lb-rank {
+      font-size: 1.5rem;
+      width: 36px;
+      text-align: center;
+    }
+
+    .lb-name {
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .lb-door {
+      font-family: 'Pixelify Sans', monospace;
+      font-size: 0.85rem;
+    }
+
+    .lb-time {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .lb-empty {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.9rem;
+      padding: 20px;
+    }
+
+    /* ==================== SURPRISE SCREEN ==================== */
+    #screen-surprise {
+      background: radial-gradient(ellipse at 40% 20%, #3d0070 0%, #1a0040 40%, #0a0020 100%);
+      overflow-y: auto;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .surprise-wrap {
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .surprise-heart {
+      font-size: 5rem;
+      animation: heartbeat 1.2s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.2)
+      }
+    }
+
+    .surprise-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      text-align: center;
+      background: linear-gradient(135deg, #ffd700, #ff2d78, #b06aff, #00fff7);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoGradient 3s ease infinite;
+    }
+
+    .surprise-msg-card {
+      background: rgba(176, 106, 255, 0.1);
+      border: 1px solid rgba(176, 106, 255, 0.4);
+      border-radius: 20px;
+      padding: 32px;
+      width: 100%;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.98rem;
+      line-height: 1.9;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .surprise-msg-card p {
+      margin-bottom: 14px;
+    }
+
+    .surprise-msg-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .surprise-highlight {
+      color: #b06aff;
+      font-weight: 700;
+    }
+
+    .confetti-emoji {
+      font-size: 1.5rem;
+      animation: confetti-fall 2s ease-in-out infinite alternate;
+      display: inline-block;
+    }
+
+    @keyframes confetti-fall {
+      from {
+        transform: translateY(-10px) rotate(-15deg)
+      }
+
+      to {
+        transform: translateY(10px) rotate(15deg)
+      }
+    }
+
+    .results-summary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .results-summary h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .friend-result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.88rem;
+    }
+
+    .friend-result-row:last-child {
+      border-bottom: none;
+    }
+
+    /* ==================== NAV BACK ==================== */
+    .nav-back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
+      display: none;
+    }
+
+    .nav-back:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-back.visible {
+      display: block;
+    }
+
+    /* ==================== TOAST ==================== */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(30, 30, 30, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 0.88rem;
+      color: white;
+      z-index: 200;
+      transition: transform 0.3s ease;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==================== CONFETTI PARTICLES ==================== */
+    .confetti-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 500;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confetti-drop var(--dur, 3s) ease-in forwards;
+    }
+
+    @keyframes confetti-drop {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* ==================== DOOR COLORS ==================== */
+    .door-1 {
+      background: linear-gradient(135deg, #ff6b9d22, #ff2d7822);
+      border-color: #ff6b9d55;
+      color: #ff6b9d;
+    }
+
+    .door-2 {
+      background: linear-gradient(135deg, #ffbe0b22, #ff950022);
+      border-color: #ffbe0b55;
+      color: #ffbe0b;
+    }
+
+    .door-3 {
+      background: linear-gradient(135deg, #06d6a022, #05a87e22);
+      border-color: #06d6a055;
+      color: #06d6a0;
+    }
+
+    .door-4 {
+      background: linear-gradient(135deg, #3d9be922, #0066cc22);
+      border-color: #3d9be955;
+      color: #3d9be9;
+    }
+
+    .door-5 {
+      background: linear-gradient(135deg, #b06aff22, #7c3aed22);
+      border-color: #b06aff55;
+      color: #b06aff;
+    }
+
+    /* friend screen backgrounds */
+    .friend-bg-1 {
+      background: radial-gradient(ellipse at 30% 30%, #4a0020 0%, #1a0010 50%, #000 100%);
+    }
+
+    .friend-bg-2 {
+      background: radial-gradient(ellipse at 70% 30%, #3a2500 0%, #1a1000 50%, #000 100%);
+    }
+
+    .friend-bg-3 {
+      background: radial-gradient(ellipse at 30% 70%, #003a20 0%, #001a10 50%, #000 100%);
+    }
+
+    .friend-bg-4 {
+      background: radial-gradient(ellipse at 70% 70%, #001a3a 0%, #000a1a 50%, #000 100%);
+    }
+
+    .friend-bg-5 {
+      background: radial-gradient(ellipse at 50% 30%, #2a0040 0%, #100020 50%, #000 100%);
+    }
+
+    /* challenge screen tinted */
+    .challenge-bg-1 {
+      background: radial-gradient(ellipse at top, #2a0010 0%, #0a0005 100%);
+    }
+
+    .challenge-bg-2 {
+      background: radial-gradient(ellipse at top, #2a1500 0%, #0a0500 100%);
+    }
+
+    .challenge-bg-3 {
+      background: radial-gradient(ellipse at top, #001a0a 0%, #000500 100%);
+    }
+
+    .challenge-bg-4 {
+      background: radial-gradient(ellipse at top, #00101a 0%, #000500 100%);
+    }
+
+    .challenge-bg-5 {
+      background: radial-gradient(ellipse at top, #150025 0%, #050010 100%);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 480px) {
+
+      .gf-card,
+      .friend-intro-card,
+      .name-card,
+      .challenge-card,
+      .complete-card,
+      .leaderboard-card,
+      .surprise-wrap {
+        padding: 24px 18px;
+      }
+
+      .doors-grid {
+        gap: 10px;
+      }
+
+      .door-card {
+        width: 85px;
+        height: 120px;
+      }
+
+      .music-choice {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Stars Background -->
+  <div id="stars-bg"></div>
+
+  <!-- Nav Back -->
+  <button class="nav-back" id="nav-back" onclick="goBack()">← Back</button>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <!-- ==================== SCREEN: INTRO ==================== -->
+  <div class="screen" id="screen-intro">
+    <div class="intro-logo" id="intro-logo">OBBZY<br>GAMES</div>
+    <div class="intro-sub">Made with love 💜</div>
+    <div class="intro-emoji-row">🎮 🌟 🎯 💫 🎪</div>
+    <div class="intro-btn">
+      <button class="btn btn-purple" onclick="startFromIntro()">PRESS START ▶</button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: GIRLFRIEND ==================== -->
+  <div class="screen hidden" id="screen-gf">
+    <div class="gf-card">
+      <div class="gf-crown">👑</div>
+      <div class="gf-title">Hey baby 💜</div>
+      <div class="gf-sub">
+        Welcome to <strong>OBBZY GAMES</strong> a little world I built just for you.<br><br>
+        Your mission? Share your special link with <strong>5 of your friends</strong>. Each one gets a unique door with
+        a challenge about you. See who knows you best! 🎯
+      </div>
+      <div class="gf-link-box" id="gf-link-display" onclick="copyLink()">
+        🔗 Click to copy your invite link
+      </div>
+      <div class="copy-hint">Share this with exactly 5 friends to unlock the surprise 💌</div>
+      <button class="btn btn-purple" onclick="goToLeaderboard()">📊 See Who Joined</button>
+      <br>
+      <button class="btn btn-outline gf-leaderboard-btn" onclick="showScreen('screen-code-input')" id="gf-surprise-btn"
+        style="margin-top:12px;">
+        🎁 Enter Codes to See Surprise
+      </button>
+      <br>
+      <button
+        onclick="if(confirm('Reset all friend data? Do this before sharing the link for the first time.')){localStorage.removeItem('obbzy_joined');localStorage.removeItem('obbzy_completed');showToast('✅ Reset done! Ready to share.');showGFScreen();}"
+        style="margin-top:16px; background:none; border:none; color:rgba(255,255,255,0.2); font-size:0.7rem; cursor:pointer; font-family:monospace;">⚙
+        reset data</button>
+    </div>
+  </div>
+  <div id="screen-code-input" class="screen hidden"
+    style="background: radial-gradient(ellipse at center, #12003a 0%, #000 80%);">
+    <div class="gf-card" style="max-width:500px;">
+      <div style="font-size:2.5rem; margin-bottom:8px;">🔐</div>
+      <div class="gf-title" style="font-size:1.6rem;">Enter the Secret Codes</div>
+      <div class="gf-sub">Collect all 5 codes from your friends and enter them below 💜</div>
+      <div style="display:flex; flex-direction:column; gap:10px; width:100%; margin:20px 0;">
+        <input id="code-1" placeholder="Code from Friend 1"
+          style="padding:12px 16px; border-radius:12px; border:1px solid rgba(176,106,255,0.4); background:rgba(176,106,255,0.1); color:white; font-family:'Syne',sans-serif; font-size:1rem; text-align:center; letter-spacing:4px; outline:none;"
+          maxlength="10" />
+        <input id="code-2" placeholder="Code from Friend 2"
+          style="padding:12px 16px; border-radius:12px; border:1px solid rgba(176,106,255,0.4); background:rgba(176,106,255,0.1); color:white; font-family:'Syne',sans-serif; font-size:1rem; text-align:center; letter-spacing:4px; outline:none;"
+          maxlength="10" />
+        <input id="code-3" placeholder="Code from Friend 3"
+          style="padding:12px 16px; border-radius:12px; border:1px solid rgba(176,106,255,0.4); background:rgba(176,106,255,0.1); color:white; font-family:'Syne',sans-serif; font-size:1rem; text-align:center; letter-spacing:4px; outline:none;"
+          maxlength="10" />
+        <input id="code-4" placeholder="Code from Friend 4"
+          style="padding:12px 16px; border-radius:12px; border:1px solid rgba(176,106,255,0.4); background:rgba(176,106,255,0.1); color:white; font-family:'Syne',sans-serif; font-size:1rem; text-align:center; letter-spacing:4px; outline:none;"
+          maxlength="10" />
+        <input id="code-5" placeholder="Code from Friend 5"
+          style="padding:12px 16px; border-radius:12px; border:1px solid rgba(176,106,255,0.4); background:rgba(176,106,255,0.1); color:white; font-family:'Syne',sans-serif; font-size:1rem; text-align:center; letter-spacing:4px; outline:none;"
+          maxlength="10" />
+      </div>
+      <button onclick="checkCodes()" class="btn btn-purple" style="width:100%;">Unlock the Surprise 💜</button>
+      <div id="code-error"
+        style="color:#ff2d78; margin-top:14px; font-family:'Space Mono',monospace; font-size:0.85rem;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: FRIEND INTRO ==================== -->
+  <div class="screen hidden" id="screen-friend-intro">
+    <div class="friend-intro-card" id="friend-intro-card">
+      <div class="friend-intro-emoji" id="friend-intro-emoji">🎮</div>
+      <div class="friend-intro-title" id="friend-intro-title">Welcome, Friend!</div>
+      <div class="friend-intro-desc" id="friend-intro-desc">
+        You've been invited to OBBZY GAMES! Your friend set up this special challenge just for you.
+      </div>
+      <button class="btn btn-pink" onclick="goToNameEntry()">Let's Go! 🚀</button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: NAME ENTRY ==================== -->
+  <div class="screen hidden" id="screen-name">
+    <div class="name-card">
+      <div class="name-title">What's your name? ✨</div>
+      <div class="name-sub">So we can track your spot on the leaderboard</div>
+      <input type="text" class="name-input" id="name-input" placeholder="Enter your name..." maxlength="20" />
+      <button class="btn btn-pink" onclick="submitName()" style="width:100%">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: DOORS ==================== -->
+  <div class="screen hidden" id="screen-doors">
+    <div class="doors-title">🚪 Choose Your Door</div>
+    <div class="doors-sub" id="doors-sub-text">Your door is being assigned...</div>
+    <div class="doors-grid" id="doors-grid">
+      <div class="door-card door-1" onclick="tryDoor(1)">
+        <div class="door-shine"></div>
+        <div class="door-lock" id="door-lock-1">🔒</div>
+        <div class="door-num">1</div>
+        <div class="door-label">DOOR ONE</div>
+      </div>
+      <div class="door-card door-2" onclick="tryDoor(2)">
+        <div class="door-shine"></div>
+        <div class="door-lock" id="door-lock-2">🔒</div>
+        <div class="door-num">2</div>
+        <div class="door-label">DOOR TWO</div>
+      </div>
+      <div class="door-card door-3" onclick="tryDoor(3)">
+        <div class="door-shine"></div>
+        <div class="door-lock" id="door-lock-3">🔒</div>
+        <div class="door-num">3</div>
+        <div class="door-label">DOOR THREE</div>
+      </div>
+      <div class="door-card door-4" onclick="tryDoor(4)">
+        <div class="door-shine"></div>
+        <div class="door-lock" id="door-lock-4">🔒</div>
+        <div class="door-num">4</div>
+        <div class="door-label">DOOR FOUR</div>
+      </div>
+      <div class="door-card door-5" onclick="tryDoor(5)">
+        <div class="door-shine"></div>
+        <div class="door-lock" id="door-lock-5">🔒</div>
+        <div class="door-num">5</div>
+        <div class="door-label">DOOR FIVE</div>
+      </div>
+    </div>
+    <div style="margin-top:24px; text-align:center;">
+      <button class="btn btn-outline" style="font-size:0.8rem; padding:8px 20px;" onclick="goToLeaderboard()">📊
+        Leaderboard</button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: CHALLENGE ==================== -->
+  <div class="screen hidden" id="screen-challenge">
+    <div class="challenge-wrap" id="challenge-wrap">
+      <div class="challenge-header">
+        <div class="challenge-door-badge" id="challenge-door-badge">DOOR 1</div>
+        <div class="challenge-title" id="challenge-title">Challenge Title</div>
+        <div class="challenge-desc" id="challenge-desc">Description here</div>
+      </div>
+      <div class="progress-bar-wrap" style="width:100%">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Question 1 / 3</div>
+      <div id="challenge-content"></div>
+      <div id="challenge-nav" style="display:flex; gap:12px; width:100%; justify-content:flex-end; margin-top:8px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: COMPLETE ==================== -->
+  <div class="screen hidden" id="screen-complete">
+    <div class="complete-card">
+      <div class="complete-emoji" id="complete-emoji">🎉</div>
+      <div class="complete-title" id="complete-title">Challenge Complete!</div>
+      <div class="complete-msg" id="complete-msg">You did it!</div>
+      <br>
+      <button class="btn btn-gold" onclick="goToLeaderboard()" style="margin-top:8px">📊 See Leaderboard</button>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: LEADERBOARD ==================== -->
+  <div class="screen hidden" id="screen-leaderboard">
+    <div class="leaderboard-card">
+      <div class="leaderboard-title">🏆 Hall of Fame</div>
+      <div class="leaderboard-sub">Sorted by who joined first → gets Door 1</div>
+      <div id="leaderboard-list"></div>
+      <div style="margin-top:20px; text-align:center;">
+        <button class="btn btn-outline" style="font-size:0.85rem;" onclick="goBack()">← Back</button>
+      </div>
+    </div>
+  </div>
+  <!-- ==================== SCREEN: FINAL LETTER ==================== -->
+  <div class="screen hidden" id="screen-letter">
+    <div class="surprise-wrap">
+
+      <div class="surprise-heart">💌</div>
+
+      <div class="surprise-title">A Final Thing…</div>
+
+      <div class="surprise-msg-card" id="letter-card" style="text-align:left; line-height:2;">
+
+        <p>Hey you,</p>
+
+        <p>
+          If you're reading this, it means you made it all the way through OBBZY GAMES.
+          That already says a lot about you — patience, curiosity, and a little bit of chaos 😄
+        </p>
+
+        <p>
+          I didn’t build this just as a game.
+          I built it because I wanted you to feel something while going through it.
+        </p>
+
+        <p>
+          Every question, every door, every small detail… it was all based on you.
+          Your habits, your words, your music, your energy.
+        </p>
+
+        <p>
+          And somewhere in all of that, there’s something I never really say enough:
+        </p>
+
+        <p style="font-size:1.2rem; color:#ffd700; font-weight:800;">
+          I love you.
+        </p>
+
+        <p>
+          Not in a loud way. Not in a temporary way.
+          But in a “I notice everything about you even when you don’t realize it” kind of way.
+        </p>
+
+        <p>
+          You’re my favorite person to build things for, think about, and care about.
+          And I hope this little world made you smile at least once.
+        </p>
+
+        <p style="color:#b06aff; font-weight:700;">
+          Always you. Always will be. 💜
+        </p>
+
+      </div>
+
+      <button class="btn btn-purple" onclick="launchConfetti(); showToast('💜')">
+        One More Celebration 🎊
+      </button>
+
+      <button class="btn btn-outline" onclick="goToLeaderboard()">
+        View Leaderboard 📊
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN: SURPRISE ==================== -->
+  <div class="screen hidden" id="screen-surprise">
+    <div class="surprise-wrap">
+      <div class="surprise-heart">💜</div>
+      <div class="surprise-title">For You, My Love 🌹</div>
+      <div class="surprise-msg-card" id="surprise-msg-card">
+        Loading your surprise...
+      </div>
+      <div class="results-summary" id="results-summary" style="display:none;">
+        <h3>⭐ How Your Friends Did ⭐</h3>
+        <div id="results-list"></div>
+      </div>
+      <button class="btn btn-purple" onclick="launchConfetti(); showToast('💜 I love you!')">Celebrate! 🎊</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+
+</html>
